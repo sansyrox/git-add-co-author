@@ -1,6 +1,7 @@
 # Git Add Co-Author
 
 ## Demo
+![git-add-co-author](https://user-images.githubusercontent.com/29942790/235253455-12d5d664-7ff8-43ad-b1fe-63db986120aa.gif)
 
 
 ## Overview
