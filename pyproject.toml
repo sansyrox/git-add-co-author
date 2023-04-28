@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "git-add-co-author"
-version = "0.4.0"
-description = ""
+version = "0.4.1"
+description = "Git Add Co-Author is a simple Python script that allows you to easily add co-authors to your Git commits."
 authors = ["Sanskar Jethi <sansyrox@gmail.com>"]
 readme = "README.md"
 packages = [{include = "git_add_co_author"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.8"
 requests = "^2.29.0"
 click = "^8.1.3"
 
