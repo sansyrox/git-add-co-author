@@ -1,26 +1,22 @@
 import requests
 import subprocess
 import click
-import shelve
 
 DB_PATH = "/tmp/add-co-author"
 
 
-def add_co_author(username, name="", email="", token=""):
-    if token:
-        subprocess.call(["git", "config", "--global", "github.token", token])
-    else:
-        token = (
-            subprocess.check_output(["git", "config", "--global", "github.token"])
-            .decode("utf-8")
-            .strip()
-        )
-    if not token:
-        raise ValueError(
-            "GitHub token not found. Please provide a token with --token or configure one with `git config --global github.token <token>`"
-        )
-
+def add_co_author(username="", name="", email="", token=""):
     if not name and not email:
+        if not token:
+            raise ValueError(
+                "GitHub token not found. Please provide a token with --token or configure one with `git config --global github.token <token>`"
+            )
+
+        if not username:
+            raise ValueError(
+                "GitHub username not found. Please provide a username as the first argument."
+            )
+
         headers = {"Authorization": f"Bearer {token}"}
         response = requests.get(
             f"https://api.github.com/users/{username}", headers=headers
@@ -43,21 +39,24 @@ def add_co_author(username, name="", email="", token=""):
 
 
 def save_token(token):
-    with shelve.open(DB_PATH) as db:
-        db["token"] = token
+    subprocess.call(["git", "config", "--global", "github.add-co-author-token", token])
 
 
 def get_token():
-    with shelve.open(DB_PATH) as db:
-        return db.get("token", "")
+    token = (
+        subprocess.check_output(["git", "config", "--global", "github.token"])
+        .decode("utf-8")
+        .strip()
+    )
+    return token
 
 
 @click.command()
-@click.argument("username")
+@click.option("--username", "-u", help="The GitHub username.")
 @click.option("--name", "-n", help="The name of the co-author.")
 @click.option("--email", "-e", help="The email address of the co-author.")
 @click.option("--token", "-t", help="Your GitHub personal access token.")
-def main(username, name="", email="", token=""):
+def main(username="", name="", email="", token=""):
     if token:
         save_token(token)
     else:
