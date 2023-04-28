@@ -29,7 +29,7 @@ python -m git_add_co_author --token <your_token>
 To add a co-author to your commit, simply run the script with the co-author's GitHub username:
 
 ```bash
-python -m git_add_co_author <co_author_username>
+python -m git_add_co_author --username <co_author_username>
 ```
 
 For example:
@@ -46,7 +46,7 @@ python -m git_add_co_author --name "John Doe" --email "john.doe@example.com"
 
 ### Optional Configuration
 
-I alias this command as `alias gac="python -m git_add_co_author"` in my `.zshrc` file, so I can simply run `gac <co_author_username>` to add a co-author to my commit.
+I alias this command as `alias gac="python -m git_add_co_author --username"` in my `.zshrc` file, so I can simply run `gac <co_author_username>` to add a co-author to my commit.
 
 ## Rationale
 
